@@ -105,7 +105,7 @@ print(currentTime(), 'Created the lists and dictionaries of resulting pairs, par
 bookkeeping_projects_name = {}
 bookkeeping_projects_address = {}
 number_of_projects_all = 0
-with open('../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-0.projs','r') as fin:
+with open('../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-all.projs','r') as fin:
     for line in fin:
         number_of_projects_all = number_of_projects_all + 1
         x = line.split(',')
@@ -123,7 +123,7 @@ bookkeeping_blocks_project = {}
 bookkeeping_blocks_name = {}
 bookkeeping_blocks_length = {}
 number_of_blocks = 0
-with open('../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-0.tokens','r',encoding='utf8') as fin:
+with open('../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-all.tokens','r',encoding='utf8') as fin:
     for line in fin:
         number_of_blocks = number_of_blocks + 1
         x = line.split(',')
@@ -175,7 +175,7 @@ print(currentTime(), 'Created a bar graph of the projects frequency')
 bookkeeping_files_project = {}
 bookkeeping_files_address = {}
 bookkeeping_blocks_lines = {}
-with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-0.stats','r') as fin:
+with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats','r') as fin:
     with open('data/statistics_bad_files.txt','w') as fout:
         for line in fin:
             x = line.split(',')
