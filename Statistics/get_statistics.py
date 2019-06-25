@@ -100,7 +100,7 @@ with open('../SourcererCC/results.pairs','r') as fin:
 set_of_blocks_temporary = None
 del set_of_blocks_temporary
 
-print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 2')
+print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 2, amount of unique blocks:',len(set_of_blocks_extended))
 
 bookkeeping_projects_name = {}
 bookkeeping_projects_address = {}
@@ -190,7 +190,7 @@ with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-0.
             if (x[0][0] == 'b') and (int(x[2]) in set_of_blocks_extended):
                 bookkeeping_blocks_lines[int(x[2])] = [int(x[7]),int(x[8])]
             
-print(currentTime(), 'Created a dictionary of files and block lines, as well as filtered bad files')
+print(currentTime(), 'Created a dictionary of files and block lines, as well as filtered bad files, total amount of files to process:',len(set_of_files_extended))
 
 set_of_blocks_extended_copy = set_of_blocks_extended
 for i in set_of_blocks_extended_copy:
@@ -214,11 +214,16 @@ graph_pairs_extended = None
 del graph_pairs_extended
 print(currentTime(), 'Created a graph of clones and a list of all cliques for different project (extended)')
 
-bookkeeping_projects_default_license = {11 : 'Apache-2', 12 : 'GPLv2', 13 : 'Apache-2'}
-#for i in set_of_projects_extended:
-#    with open(bookkeeping_projects_address[i] + '.txt','r') as fin:
-#        bookkeeping_projects_default_license[i] = fin.readline().rstrip()
-
+for i in set_of_projects_extended:
+    with open(bookkeeping_projects_address[i] + '.txt','r') as fin:
+        x = fin.readline().rstrip()
+        if ':' in x:
+            if ',' in x:
+                bookkeeping_projects_default_license[i] = x.split(',')[0].split(':')[0]
+            else:
+                bookkeeping_projects_default_license[i] = x.split(':')[0]
+        else:
+            bookkeeping_projects_default_license[i] = 'GitHub'
 print(currentTime(), 'Created a dictionary of default projects licenses')
 
 with open('data/statistics_licenses.txt','w') as fout:
