@@ -1,0 +1,3 @@
+[submodule "SourcererCC"]
+	path = SourcererCC
+	url = https://github.com/ml-in-programming/SourcererCC
