@@ -167,7 +167,7 @@ pyplot.xticks(sorted_projects_frequency[:, 0])
 pyplot.title('Projects distribution by number of inter-project clone')
 pyplot.xlabel('Project ID')
 pyplot.ylabel('Number of clones')
-pyplot.savefig('statistics/projects.png')
+pyplot.savefig('data/projects.png')
 pyplot.close()
 
 print(currentTime(), 'Created a bar graph of the projects frequency')
