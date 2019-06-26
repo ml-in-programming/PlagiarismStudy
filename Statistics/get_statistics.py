@@ -100,7 +100,7 @@ with open('../SourcererCC/results.pairs','r') as fin:
 set_of_blocks_temporary = None
 del set_of_blocks_temporary
 
-print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 2, amount of unique blocks:',len(set_of_blocks_extended))
+print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 2')
 
 bookkeeping_projects_name = {}
 bookkeeping_projects_address = {}
@@ -192,14 +192,14 @@ with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-al
             
 print(currentTime(), 'Created a dictionary of files and block lines, as well as filtered bad files, total amount of files to process:',len(set_of_files_extended))
 
-set_of_blocks_extended_copy = set_of_blocks_extended
+set_of_blocks_extended_copy = set_of_blocks_extended.copy()
 for i in set_of_blocks_extended_copy:
     if int(str(i)[5:]) not in set_of_files_extended:
         set_of_blocks_extended.remove(i)
 set_of_blocks_extended_copy = None
 del set_of_blocks_extended_copy
 
-print(currentTime(), 'Filtered blocks from bad files')
+print(currentTime(), 'Filtered blocks from bad files', len(set_of_blocks_extended))
 
 graph_pairs_extended = nx.Graph()
 graph_pairs_extended.add_nodes_from(set_of_blocks_extended)
@@ -214,6 +214,7 @@ graph_pairs_extended = None
 del graph_pairs_extended
 print(currentTime(), 'Created a graph of clones and a list of all cliques for different project (extended)')
 
+bookkeeping_projects_default_license = {}
 for i in set_of_projects_extended:
     with open(bookkeeping_projects_address[i] + '.txt','r') as fin:
         x = fin.readline().rstrip()
