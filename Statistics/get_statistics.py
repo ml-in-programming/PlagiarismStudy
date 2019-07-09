@@ -24,11 +24,11 @@ def getLicense(fileid):
 def getBlame(fileid):
     command = '(cd ' + bookkeeping_projects_address[bookkeeping_files_project[fileid]] + '; git blame \"' + bookkeeping_files_address[fileid] + '\")'
     blame = cmdline(command).decode('utf8').split('\n')
-    dict = {}
+    result = {}
     for i in range(len(blame)-1):
         name = re.search(r'(\d{4}-\d{2}-\d{2})',blame[i])
-        dict[i + 1] = datetime.strptime(name.group(1),'%Y-%m-%d')
-    return(dict)
+        result[i + 1] = datetime.strptime(name.group(1),'%Y-%m-%d')
+    return(result)
 
 def largestMode(numbers):
     counts = {k:numbers.count(k) for k in set(numbers)}
