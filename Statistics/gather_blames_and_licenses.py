@@ -19,7 +19,7 @@ def getLicense(fileid):
 
 def getBlame(fileid):
     command = '(cd ' + bookkeeping_projects_address[bookkeeping_files_project[fileid]] + '; git blame \"' + bookkeeping_files_address[fileid] + '\")'
-    blame = cmdline(command).decode('utf8').split('\n')
+    blame = cmdline(command).decode('ISO-8859-1').split('\n')
     result = {}
     for i in range(len(blame)-1):
         name = re.search(r'(\d{4}-\d{2}-\d{2})',blame[i])
@@ -109,7 +109,7 @@ with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-al
             if (x[0][0] == 'f') and (int(x[2]) in set_of_files_extended):
                 bookkeeping_files_project[int(x[2])] = int(x[1])
                 name = re.match(r'"NULL/([^\/]*)\/(.*)"',x[4])
-                if (name is not None) and ('(' not in unquote(name.group(2))) and (')' not in unquote(name.group(2))) and ('\'' not in unquote(name.group(2))) and ('\"' not in unquote(name.group(2))):
+                if (name is not None) and ('(' not in unquote(name.group(2))) and (')' not in unquote(name.group(2))) and ('\'' not in unquote(name.group(2))) and ('\"' not in unquote(name.group(2))) and ('$' not in unquote(name.group(2))):
                     bookkeeping_files_address[int(x[2])] = unquote(name.group(2))
                 else:
                     fout.write(line)
@@ -142,18 +142,18 @@ for i in set_of_projects_extended:
             
 print(currentTime(), 'Created a dictionary of default projects licenses')
 
-with open('data/statistics_licenses.txt','w') as fout:
-    bookkeeping_files_license = {}
-    bookkeeping_files_license_processed = {}
-    for i in set_of_files_extended:
-        bookkeeping_files_license[i] = getLicense(i)
-        x = bookkeeping_files_license[i].split(';')
-        if x[1].rstrip() == 'NONE' or x[1].rstrip() == 'UNKNOWN':
-            x[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
-        bookkeeping_files_license_processed[i] = x[1].rstrip()
-        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i]  + ';' + bookkeeping_files_license_processed[i] + '\n')
-        
-print(currentTime(), 'Created a dictionary and a text file with the licenses')
+#with open('data/statistics_licenses.txt','w') as fout:
+#    bookkeeping_files_license = {}
+#    bookkeeping_files_license_processed = {}
+#    for i in set_of_files_extended:
+#        bookkeeping_files_license[i] = getLicense(i)
+#        x = bookkeeping_files_license[i].split(';')
+#        if x[1].rstrip() == 'NONE' or x[1].rstrip() == 'UNKNOWN' or x[1].rstrip() == 'ERROR' or x[1].rstrip() == 'SeeFile':
+#            x[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
+#        bookkeeping_files_license_processed[i] = x[1].rstrip()
+#        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i]  + ';' + bookkeeping_files_license_processed[i] + '\n')
+#        
+#print(currentTime(), 'Created a dictionary and a text file with the licenses')
 
 with open('data/statistics_blame.txt','w') as fout:
     bookkeeping_files_blame = {}
@@ -170,6 +170,6 @@ with open('data/statistics_blame_processed.txt','w') as fout:
         for j in range(bookkeeping_blocks_lines[i][0],bookkeeping_blocks_lines[i][1] + 1):
             bookkeeping_blocks_blame.append(bookkeeping_files_blame[int(str(i)[5:])][j])
         bookkeeping_blocks_blame_processed[i] = largestMode(bookkeeping_blocks_blame)
-        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_blocks_project[i]] + '/' + bookkeeping_files_address[int(str(i)[5:])] + ';' + str(bookkeeping_blocks_lines[i][0]) + '-' + str(bookkeeping_blocks_lines[i][1]) + ';' + str(bookkeeping_blocks_blame_processed[i]) + '\n')
+        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_blocks_project[i]] + '/' + bookkeeping_files_address[int(str(i)[5:])] + ';' + str(bookkeeping_blocks_lines[i][0]) + '-' + str(bookkeeping_blocks_lines[i][1]) + ';' + bookkeeping_blocks_blame_processed[i].strftime('%Y-%m-%d') + '\n')
         
 print(currentTime(), 'Created a dictionary and a text file of blocks blames processed')
