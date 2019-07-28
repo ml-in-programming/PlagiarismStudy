@@ -142,18 +142,18 @@ for i in set_of_projects_extended:
             
 print(currentTime(), 'Created a dictionary of default projects licenses')
 
-#with open('data/statistics_licenses.txt','w') as fout:
-#    bookkeeping_files_license = {}
-#    bookkeeping_files_license_processed = {}
-#    for i in set_of_files_extended:
-#        bookkeeping_files_license[i] = getLicense(i)
-#        x = bookkeeping_files_license[i].split(';')
-#        if x[1].rstrip() == 'NONE' or x[1].rstrip() == 'UNKNOWN' or x[1].rstrip() == 'ERROR' or x[1].rstrip() == 'SeeFile':
-#            x[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
-#        bookkeeping_files_license_processed[i] = x[1].rstrip()
-#        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i]  + ';' + bookkeeping_files_license_processed[i] + '\n')
-#        
-#print(currentTime(), 'Created a dictionary and a text file with the licenses')
+with open('data/statistics_licenses.txt','w') as fout:
+    bookkeeping_files_license = {}
+    bookkeeping_files_license_processed = {}
+    for i in set_of_files_extended:
+        bookkeeping_files_license[i] = getLicense(i)
+        x = bookkeeping_files_license[i].split(';')
+        if x[1].rstrip() == 'NONE' or x[1].rstrip() == 'UNKNOWN' or x[1].rstrip() == 'ERROR' or x[1].rstrip() == 'SeeFile':
+            x[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
+        bookkeeping_files_license_processed[i] = x[1].rstrip()
+        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i]  + ';' + bookkeeping_files_license_processed[i] + '\n')
+        
+print(currentTime(), 'Created a dictionary and a text file with the licenses')
 
 with open('data/statistics_blame.txt','w') as fout:
     bookkeeping_files_blame = {}
