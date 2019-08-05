@@ -159,7 +159,7 @@ with open('data/statistics_blame.txt','w') as fout:
     bookkeeping_files_blame = {}
     for i in set_of_files_extended:
         bookkeeping_files_blame[i] = getBlame(i)
-        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i] + '/' + str(bookkeeping_files_blame[i]) + '\n')
+        fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i] + ';' + str(bookkeeping_files_blame[i]) + '\n')
         
 print(currentTime(), 'Created a dictionary and a text file of files blames')
 
