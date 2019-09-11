@@ -7,8 +7,8 @@ Firstly, get_java_projects.py is executed to create a file java_projects_data.tx
 * name of the repository;
 * licensing information.
 
-After that, download_projects.py downloads the projects and saves them in /home/ubuntu/projects/. In the end, each project will be located
-in the directory with the name of the author of the repository, and will consist of three items:
+After that, download_projects.py downloads the projects and saves them in the desired directory. In the end, each project will be located
+in the subdirectory with the name of the author of the repository, and will consist of three items:
 * git-cloned directory with the entire history of changes;
 * zip-file of the last commit to be processed by SourcererCC;
 * txt-file with the licensing information.
@@ -18,4 +18,4 @@ The download happens in several steps. The reason for that is that certain proje
 The last stage of data collection is running create_a_list_of_projects.py that generates project-list.txt, a file that must be copied to
 SourcererCC/tokenizers/block-level/.
 
-Now you are ready to continue on to the next stage: searching for clones.
+This marks the end of Data Collection and the beginning of Clone Detection with SourcererCC.
