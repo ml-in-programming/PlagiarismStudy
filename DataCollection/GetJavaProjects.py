@@ -2,7 +2,7 @@ import csv
 
 csv.field_size_limit(100000000)
 count = 0
-with open('java_projects_data.txt','w') as fout:
+with open('JavaProjectsData.txt','w') as fout:
     with open('pga.csv', newline='') as fin:
         reader = csv.reader(fin)
         for row in reader:
@@ -17,4 +17,4 @@ with open('java_projects_data.txt','w') as fout:
                 lic = row[13]
                 fout.write(author + ';' + name + ';' + lic + '\n')
                 
-print('Created java_projects_data.txt for',count,'Java projects')
+print('Created JavaProjectsData.txt for',count,'Java projects')
