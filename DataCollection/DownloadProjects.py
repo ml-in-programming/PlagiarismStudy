@@ -9,13 +9,13 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
-num_lines = sum(1 for line in open('java_projects_data.txt'))
+num_lines = sum(1 for line in open('JavaProjectsData.txt'))
 print('// Commencing download of', num_lines, 'projects.')
 
 path = '/home/ubuntu/projects/' 
 
 count = 0
-with open('java_projects_data.txt','r') as fin:
+with open('JavaProjectsData.txt','r') as fin:
     for line in fin:
         count = count + 1
         data = line.split(';')
@@ -30,13 +30,13 @@ with open('java_projects_data.txt','r') as fin:
         print('___________________________________________')
 print('Completed initial download')
 
-with open('java_projects_data.txt','r') as fin:
-    with open('list_checks.txt','w') as fout:
+with open('JavaProjectsData.txt','r') as fin:
+    with open('ListChecks.txt','w') as fout:
         for line in fin:
             data = line.split(';')
             fout.write(data[0] + '/' + data[1] + ';' + str(os.path.isdir(path + data[0] + '/' + data[1])) + ';' + str(os.path.isfile(path + data[0] + '/' + data[1] + '.zip')) + ';' + str(os.path.isfile(path + data[0] + '/' + data[1] + '.txt')) + '\n')
 
-with open('list_checks.txt','r') as fin:
+with open('ListChecks.txt','r') as fin:
     for line in fin:
         data = line.split(';')
         if data[1] == 'False':
@@ -44,8 +44,8 @@ with open('list_checks.txt','r') as fin:
             os.system('rm ' + path + data[0] + '/' + data[1] + '.txt')
 print('Deleted uncloned projects (deleted or made private)')
 
-with open('java_projects_data','r') as fin:
-    with open('list_branches.txt','w') as fout:
+with open('JavaProjectsData','r') as fin:
+    with open('ListBranches.txt','w') as fout:
         for line in fin:
             data = line.split(';')
             if os.path.isdir(path + data[0] + '/' + data[1]) == True:
@@ -54,7 +54,7 @@ with open('java_projects_data','r') as fin:
 print('Gathered main branch of every remaining project')
 
 nonmaster = 0
-with open ('list_branches.txt','r') as fin:
+with open ('ListBranches.txt','r') as fin:
     for line in fin:
         data = line.split(';')
         if data[2].rstrip() != 'master':
