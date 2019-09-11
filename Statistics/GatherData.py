@@ -45,77 +45,73 @@ set_of_blocks_temporary = set()
 set_of_blocks_extended = set()
 set_of_files_extended = set()
 set_of_projects_extended = set()
-with open('../SourcererCC/results.pairs','r') as fin:
-    with open('data/results.pairs.different','w') as fout:
-        for line in fin:
-            x = line.split(',')
-            if int(x[0]) != int(x[2]):
-                set_of_blocks_temporary.add(int(x[1]))
-                set_of_blocks_temporary.add(int(x[3]))
-                fout.write(x[0] + ',' + x[1] + ',' + x[2] + ',' + x[3])
+with open('../SourcererCC/results.pairs', 'r') as fin:
+    for line in fin:
+        data = line.split(',')
+        if int(data[0]) != int(data[2]):
+            set_of_blocks_temporary.add(int(data[1]))
+            set_of_blocks_temporary.add(int(data[3]))
 
-print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 1')
+print(currentTime(), 'Created the sets of necessary blocks and files, part 1 of 2')
                     
 with open('../SourcererCC/results.pairs','r') as fin:
-    with open('data/results.pairs.different.extended','w') as fout:
-        for line in fin:
-            x = line.split(',')
-            if (int(x[1]) in set_of_blocks_temporary) or (int(x[3]) in set_of_blocks_temporary):
-                fout.write(x[0] + ',' + x[1] + ',' + x[2] + ',' + x[3])
-                set_of_blocks_extended.add(int(x[1]))
-                set_of_blocks_extended.add(int(x[3]))
-                set_of_files_extended.add(int(x[1][5:]))
-                set_of_files_extended.add(int(x[3][5:]))
-                set_of_projects_extended.add(int(x[0]))
-                set_of_projects_extended.add(int(x[2]))
+    for line in fin:
+        data = line.split(',')
+        if (int(data[1]) in set_of_blocks_temporary) or (int(data[3]) in set_of_blocks_temporary):
+            set_of_blocks_extended.add(int(data[1]))
+            set_of_blocks_extended.add(int(data[3]))
+            set_of_files_extended.add(int(data[1][5:]))
+            set_of_files_extended.add(int(data[3][5:]))
+            set_of_projects_extended.add(int(data[0]))
+            set_of_projects_extended.add(int(data[2]))
 set_of_blocks_temporary = None
 del set_of_blocks_temporary
 
-print(currentTime(), 'Created the lists and dictionaries of resulting pairs, part 2')
+print(currentTime(), 'Created the sets of necessary blocks and files, part 2 of 2')
 
 bookkeeping_projects_name = {}
 bookkeeping_projects_address = {}
-with open('../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-all.projs','r') as fin:
+with open('../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-all.projs', 'r') as fin:
     for line in fin:
-        x = line.split(',')
-        if int(x[0]) in set_of_projects_extended:
-            name = re.match(r'"((.*)\/(.*)).zip"',x[1]) 
-            bookkeeping_projects_name[int(x[0])] = name.group(3)
-            bookkeeping_projects_address[int(x[0])] = name.group(1)
+        data = line.split(',')
+        if int(data[0]) in set_of_projects_extended:
+            name = re.match(r'"((.*)\/(.*)).zip"', data[1]) 
+            bookkeeping_projects_name[int(data[0])] = name.group(3)
+            bookkeeping_projects_address[int(data[0])] = name.group(1)
             
 print(currentTime(), 'Created a dictionary of projects')
 
 bookkeeping_blocks_project = {}
 bookkeeping_blocks_name = {}
 bookkeeping_blocks_length = {}
-with open('../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-all.tokens','r',encoding='utf8') as fin:
+with open('../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-all.tokens', 'r', encoding='utf8') as fin:
     for line in fin:
-        x = line.split(',')
-        if int(x[1]) in set_of_blocks_extended:
-            bookkeeping_blocks_project[int(x[1])] = int(x[0])
+        data = line.split(',')
+        if int(data[1]) in set_of_blocks_extended:
+            bookkeeping_blocks_project[int(data[1])] = int(data[0])
             name = line.split(')')[0].split('(')[0].split(',')[4] + '(' + line.split(')')[0].split('(')[1] + ')'
-            bookkeeping_blocks_name[int(x[1])] = name
-            bookkeeping_blocks_length[int(x[1])] = int(x[2])
+            bookkeeping_blocks_name[int(data[1])] = name
+            bookkeeping_blocks_length[int(data[1])] = int(data[2])
             
-print(currentTime(), 'Created various dictionaries of blocks')
+print(currentTime(), 'Created dictionaries of blocks')
 
 bookkeeping_files_project = {}
 bookkeeping_files_address = {}
 bookkeeping_blocks_lines = {}
-with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats','r') as fin:
-    with open('data/statistics_bad_files.txt','w') as fout:
+with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats', 'r') as fin:
+    with open('data/statistics_bad_files.txt', 'w') as fout:
         for line in fin:
-            x = line.split(',')
-            if (x[0][0] == 'f') and (int(x[2]) in set_of_files_extended):
-                bookkeeping_files_project[int(x[2])] = int(x[1])
-                name = re.match(r'"NULL/([^\/]*)\/(.*)"',x[4])
+            data = line.split(',')
+            if (data[0][0] == 'f') and (int(data[2]) in set_of_files_extended):
+                bookkeeping_files_project[int(data[2])] = int(data[1])
+                name = re.match(r'"NULL/([^\/]*)\/(.*)"', data[4])
                 if (name is not None) and ('(' not in unquote(name.group(2))) and (')' not in unquote(name.group(2))) and ('\'' not in unquote(name.group(2))) and ('\"' not in unquote(name.group(2))) and ('$' not in unquote(name.group(2))):
-                    bookkeeping_files_address[int(x[2])] = unquote(name.group(2))
+                    bookkeeping_files_address[int(data[2])] = unquote(name.group(2))
                 else:
                     fout.write(line)
-                    set_of_files_extended.remove(int(x[2]))
-            if (x[0][0] == 'b') and (int(x[2]) in set_of_blocks_extended):
-                bookkeeping_blocks_lines[int(x[2])] = [int(x[7]),int(x[8])]
+                    set_of_files_extended.remove(int(data[2]))
+            if (data[0][0] == 'b') and (int(data[2]) in set_of_blocks_extended):
+                bookkeeping_blocks_lines[int(data[2])] = [int(data[7]),int(data[8])]
             
 print(currentTime(), 'Created a dictionary of files and block lines, as well as filtered bad files, total amount of files to process:',len(set_of_files_extended))
 
@@ -126,17 +122,26 @@ for i in set_of_blocks_extended_copy:
 set_of_blocks_extended_copy = None
 del set_of_blocks_extended_copy
 
-print(currentTime(), 'Filtered blocks from bad files', len(set_of_blocks_extended))
+print(currentTime(), 'Filtered blocks from bad files, total amount of blocks of interest:', len(set_of_blocks_extended))
+
+with open('../SourcererCC/results.pairs','r') as fin:
+    with open('data/resultsRelated.pairs','w') as fout:
+        for line in fin:
+            data = line.split(',')
+            if (int(data[1]) in set_of_blocks_extended) and (int(data[3]) in set_of_blocks_extended):
+                fout.write(line)
+                
+print(currentTime(), 'Created a file with pairs of interest')
 
 bookkeeping_projects_default_license = {}
 for i in set_of_projects_extended:
     with open(bookkeeping_projects_address[i] + '.txt','r') as fin:
-        x = fin.readline().rstrip()
-        if ':' in x:
-            if ',' in x:
-                bookkeeping_projects_default_license[i] = x.split(',')[0].split(':')[0]
+        data = fin.readline().rstrip()
+        if ':' in data:
+            if ',' in data:
+                bookkeeping_projects_default_license[i] = data.split(',')[0].split(':')[0]
             else:
-                bookkeeping_projects_default_license[i] = x.split(':')[0]
+                bookkeeping_projects_default_license[i] = data.split(':')[0]
         else:
             bookkeeping_projects_default_license[i] = 'GitHub'
             
@@ -147,10 +152,10 @@ with open('data/statistics_licenses.txt','w') as fout:
     bookkeeping_files_license_processed = {}
     for i in set_of_files_extended:
         bookkeeping_files_license[i] = getLicense(i)
-        x = bookkeeping_files_license[i].split(';')
-        if x[1].rstrip() == 'NONE' or x[1].rstrip() == 'UNKNOWN' or x[1].rstrip() == 'ERROR' or x[1].rstrip() == 'SeeFile':
-            x[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
-        bookkeeping_files_license_processed[i] = x[1].rstrip()
+        data = bookkeeping_files_license[i].split(';')
+        if data[1].rstrip() == 'NONE' or data[1].rstrip() == 'UNKNOWN' or data[1].rstrip() == 'ERROR' or data[1].rstrip() == 'SeeFile':
+            data[1] = bookkeeping_projects_default_license[bookkeeping_files_project[i]]
+        bookkeeping_files_license_processed[i] = data[1].rstrip()
         fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_files_project[i]] + '/' + bookkeeping_files_address[i]  + ';' + bookkeeping_files_license_processed[i] + '\n')
         
 print(currentTime(), 'Created a dictionary and a text file with the licenses')
@@ -173,3 +178,4 @@ with open('data/statistics_blame_processed.txt','w') as fout:
         fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_blocks_project[i]] + '/' + bookkeeping_files_address[int(str(i)[5:])] + ';' + str(bookkeeping_blocks_lines[i][0]) + '-' + str(bookkeeping_blocks_lines[i][1]) + ';' + bookkeeping_blocks_blame_processed[i].strftime('%Y-%m-%d') + '\n')
         
 print(currentTime(), 'Created a dictionary and a text file of blocks blames processed')
+print(currentTime(), 'DATA GATHERED')
