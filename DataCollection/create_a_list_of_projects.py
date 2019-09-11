@@ -1,3 +1,5 @@
 import os
 
-os.system('ls -d -1 /home/ubuntu/projects/*/*.zip > project-list.txt')
+path = '/home/ubuntu/projects/'
+
+os.system('ls -d -1 ' + path + '*/*.zip > project-list.txt')
