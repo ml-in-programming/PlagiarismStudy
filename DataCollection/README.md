@@ -15,7 +15,7 @@ in the subdirectory with the name of the author of the repository, and will cons
 
 The download happens in several steps. The reason for that is that certain projects are deleted or made private after the compilation of the archive, so some of the repositories will not be cloned. The script deletes extra files and also checks that the zip-file contains the main branch of the repository. During its operation, the script creates temporary files ListChecks.txt (that checks the existence of the project files) and ListBranches.txt (that stores the main brach of each repository).
 
-The last stage of data collection is running create_a_list_of_projects.py that generates project-list.txt, a file that must be copied to
+The last stage of data collection is running CreateListOfProjects.py that generates project-list.txt, a file that must be copied to
 SourcererCC/tokenizers/block-level/.
 
 This marks the end of Data Collection and the beginning of Clone Detection with SourcererCC.
