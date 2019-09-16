@@ -10,7 +10,7 @@ def cmdline(command):
     return process.communicate()[0]
 
 num_lines = sum(1 for line in open('JavaProjectsData.txt'))
-print('// Commencing download of', num_lines, 'projects.')
+print('// COMMENCING DOWNLOAD OF', num_lines, 'PROJECTS.')
 
 path = '/home/ubuntu/projects/' 
 
@@ -71,5 +71,5 @@ with open ('ListBranches.txt','r') as fin:
             print('Done for project', nonmaster)
             print('_____________________________________')
 print('Redownloaded correct branches for non-master projects'
-print('Done.')
+print('DOWNLOAD COMPLETE.')
 
