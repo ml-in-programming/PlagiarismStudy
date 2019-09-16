@@ -54,16 +54,18 @@ with open('../SourcererCC/results.pairs', 'r') as fin:
 
 print(currentTime(), 'Created the sets of necessary blocks and files, part 1 of 2')
                     
-with open('../SourcererCC/results.pairs','r') as fin:
-    for line in fin:
-        data = line.split(',')
-        if (int(data[1]) in set_of_blocks_temporary) or (int(data[3]) in set_of_blocks_temporary):
-            set_of_blocks_extended.add(int(data[1]))
-            set_of_blocks_extended.add(int(data[3]))
-            set_of_files_extended.add(int(data[1][5:]))
-            set_of_files_extended.add(int(data[3][5:]))
-            set_of_projects_extended.add(int(data[0]))
-            set_of_projects_extended.add(int(data[2]))
+with open('../SourcererCC/results.pairs', 'r') as fin:
+    with open('data/resultsExtended.pairs', 'w') as fout:
+        for line in fin:
+            data = line.split(',')
+            if (int(data[1]) in set_of_blocks_temporary) or (int(data[3]) in set_of_blocks_temporary):
+                fout.write(line)
+                set_of_blocks_extended.add(int(data[1]))
+                set_of_blocks_extended.add(int(data[3]))
+                set_of_files_extended.add(int(data[1][5:]))
+                set_of_files_extended.add(int(data[3][5:]))
+                set_of_projects_extended.add(int(data[0]))
+                set_of_projects_extended.add(int(data[2]))
 set_of_blocks_temporary = None
 del set_of_blocks_temporary
 
@@ -124,7 +126,7 @@ del set_of_blocks_extended_copy
 
 print(currentTime(), 'Filtered blocks from bad files, total amount of blocks of interest:', len(set_of_blocks_extended))
 
-with open('../SourcererCC/results.pairs','r') as fin:
+with open('data/resultsExtended.pairs','r') as fin:
     with open('data/resultsRelated.pairs','w') as fout:
         for line in fin:
             data = line.split(',')
