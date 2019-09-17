@@ -101,7 +101,7 @@ bookkeeping_files_project = {}
 bookkeeping_files_address = {}
 bookkeeping_blocks_lines = {}
 with open('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats', 'r') as fin:
-    with open('data/statistics_bad_files.txt', 'w') as fout:
+    with open('data/StatisticsBadFiles.txt', 'w') as fout:
         for line in fin:
             data = line.split(',')
             if (data[0][0] == 'f') and (int(data[2]) in set_of_files_extended):
@@ -149,7 +149,7 @@ for i in set_of_projects_extended:
             
 print(currentTime(), 'Created a dictionary of default projects licenses')
 
-with open('data/statistics_licenses.txt','w') as fout:
+with open('data/StatisticsLicensesFiles.txt','w') as fout:
     bookkeeping_files_license = {}
     bookkeeping_files_license_processed = {}
     for i in set_of_files_extended:
@@ -162,7 +162,7 @@ with open('data/statistics_licenses.txt','w') as fout:
         
 print(currentTime(), 'Created a dictionary and a text file with the licenses')
 
-with open('data/statistics_blame.txt','w') as fout:
+with open('data/StatisticsBlameFiles.txt','w') as fout:
     bookkeeping_files_blame = {}
     for i in set_of_files_extended:
         bookkeeping_files_blame[i] = getBlame(i)
@@ -170,7 +170,7 @@ with open('data/statistics_blame.txt','w') as fout:
         
 print(currentTime(), 'Created a dictionary and a text file of files blames')
 
-with open('data/statistics_blame_processed.txt','w') as fout:
+with open('data/StatisticsBlameBlocks.txt','w') as fout:
     bookkeeping_blocks_blame_processed = {}
     for i in set_of_blocks_extended:
         bookkeeping_blocks_blame = []
