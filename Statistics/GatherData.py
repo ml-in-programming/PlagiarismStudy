@@ -1,7 +1,7 @@
 import re
 import time
 from subprocess import PIPE, Popen
-from os import mkdir, path
+from os import mkdir, path, system
 from datetime import datetime, timedelta
 from urllib.parse import unquote
 
@@ -41,6 +41,12 @@ print(currentTime(), 'STARTED OPERATING — GATHERING DATA')
 if not path.exists('data'):
     mkdir('data')
     
+if not path.exists('../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-all.projs'):
+    system('cat ../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-* > ../SourcererCC/tokenizers/block-level/bookkeeping_projs/bookkeeping-proj-all.projs')
+if not path.exists('../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-all.tokens'):
+    system('cat ../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-* > ../SourcererCC/tokenizers/block-level/blocks_tokens/files-tokens-all.tokens')
+if not path.exists('../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats'):
+    system('cat ../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-* > ../SourcererCC/tokenizers/block-level/file_block_stats/files-stats-all.stats')
 set_of_blocks_temporary = set()
 set_of_blocks_extended = set()
 set_of_files_extended = set()
@@ -179,5 +185,5 @@ with open('data/StatisticsBlameBlocks.txt','w') as fout:
         bookkeeping_blocks_blame_processed[i] = largestMode(bookkeeping_blocks_blame)
         fout.write(str(i) + ';' + bookkeeping_projects_address[bookkeeping_blocks_project[i]] + '/' + bookkeeping_files_address[int(str(i)[5:])] + ';' + str(bookkeeping_blocks_lines[i][0]) + '-' + str(bookkeeping_blocks_lines[i][1]) + ';' + bookkeeping_blocks_blame_processed[i].strftime('%Y-%m-%d') + '\n')
         
-print(currentTime(), 'Created a dictionary and a text file of blocks blames processed')
+print(currentTime(), 'Created a text file of blocks blames processed')
 print(currentTime(), 'DATA GATHERED')
