@@ -1,7 +1,7 @@
 import re
 import time
 from subprocess import PIPE, Popen
-from os import mkdir, path, system
+from os import mkdir, path, system, remove
 from datetime import datetime, timedelta
 from urllib.parse import unquote
 
@@ -138,8 +138,9 @@ with open('data/resultsExtended.pairs','r') as fin:
             data = line.split(',')
             if (int(data[1]) in set_of_blocks_extended) and (int(data[3]) in set_of_blocks_extended):
                 fout.write(line)
+remove('data/resultsExtended.pairs')
                 
-print(currentTime(), 'Created a file with pairs of interest')
+print(currentTime(), 'Created a file with pairs of interest, deleted temporary files')
 
 bookkeeping_projects_default_license = {}
 for i in set_of_projects_extended:
