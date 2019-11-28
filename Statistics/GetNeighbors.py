@@ -1,6 +1,6 @@
 import time
 from datetime import datetime, timedelta
-from os import mkdir, path, remove, rmdir
+from os import mkdir, path
 
 def currentTime():
     return str(timedelta(seconds = time.time() - start_time)).split('.')[0]
@@ -39,8 +39,6 @@ with open('data/StatisticsNeighbors.txt','w+') as fout:
     for i in set_of_blocks_extended:
         with open('data/neighbors/' + str(i) + '.txt', 'r') as fin:
             fout.write(fin.readline().rstrip()[:-1] + '\n')
-        remove('data/neighbors/' + str(i) + '.txt')
-rmdir('data/neighbors')
 
 print(currentTime(), 'Created a file with blames statistics and deleted temporary files')
 print(currentTime(), 'NEIGHBORS GATHERED')
