@@ -14,7 +14,7 @@ if not path.exists('data/neighbors'):
 
 count = 0
 set_of_blocks_extended = set()
-with open('data/resultsRelated.pairs','r') as fin:
+with open('data/resultsPlagiarism.pairs','r') as fin:
     for line in fin:
         count = count + 1
         set_of_blocks_extended.add(int(data[1]))

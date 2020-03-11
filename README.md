@@ -9,4 +9,4 @@ The study consists of three main parts that together make up this repository:
 
 Each of these segments has its own detailed ReadMe.
 
-If you have any more questions, feel free to contact us at areyde.elvgren@gmail.com.
+The resulting figures are presented in **Results**.
